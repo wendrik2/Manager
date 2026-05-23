@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <header class="app-header">
+      <h1 class="app-title">TASKS</h1>
+
+      <!-- Права частина шапки: лічильник + перемикач мов -->
+      <div class="header-right">
+        <span class="task-count" id="taskCount"></span>
+
+        <!--
+          Перемикач мов.
+          Кожна кнопка має data-lang з кодом мови.
+          JS читає цей код і застосовує відповідні переклади.
+        -->
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-btn active" data-lang="uk">UA</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="de">DE</button>
+          <button class="lang-btn" data-lang="cs">CS</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="input-area">
+      <!--
+        data-i18n="placeholder:key" — спеціальний атрибут.
+        JS шукає всі елементи з data-i18n і замінює текст/placeholder
+        на переклад поточної мови.
+      -->
+      <input
+        type="text"
+        id="taskInput"
+        class="task-input"
+        maxlength="100"
+        data-i18n="placeholder:inputPlaceholder"
+      />
+      <button class="add-btn" id="addBtn">
+        <span class="btn-icon">+</span>
+      </button>
+    </div>
+
+    <nav class="filters" id="filters">
+      <!-- data-i18n="text:key" — замінить innerText елемента -->
+      <button class="filter-btn active" data-filter="all"    data-i18n="text:filterAll">    </button>
+      <button class="filter-btn"        data-filter="active" data-i18n="text:filterActive"> </button>
+      <button class="filter-btn"        data-filter="done"   data-i18n="text:filterDone">   </button>
+    </nav>
+
+    <ul class="task-list" id="taskList"></ul>
+
+    <footer class="app-footer">
+      <button class="clear-btn" id="clearBtn" data-i18n="text:clearBtn"></button>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

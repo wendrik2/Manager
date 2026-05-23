@@ -1,0 +1,385 @@
+/* ===========================
+   CSS ЗМІННІ — кольори та шрифти
+   Змінюй тут — зміниться скрізь
+   =========================== */
+:root {
+  --bg:        #0e0e11;
+  --surface:   #18181d;
+  --border:    #2a2a35;
+  --accent:    #c8f135;
+  --accent-dim:#8faa24;
+  --text:      #f0f0f0;
+  --text-muted:#6b6b80;
+  --done-color:#3a3a47;
+  --radius:    12px;
+  --font-head: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+/* ===========================
+   СКИДАННЯ СТИЛІВ + БАЗОВІ
+   =========================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 16px 40px;
+
+  /* Тонка сітка на фоні для атмосфери */
+  background-image:
+    linear-gradient(rgba(200,241,53,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,241,53,.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ===========================
+   ГОЛОВНИЙ КОНТЕЙНЕР
+   =========================== */
+.app {
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===========================
+   ШАПКА
+   =========================== */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  gap: 12px;
+}
+
+.app-title {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* Права частина шапки: лічильник + мови */
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.task-count {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+/* ===========================
+   ПЕРЕМИКАЧ МОВ
+   =========================== */
+.lang-switcher {
+  display: flex;
+  gap: 4px;
+}
+
+.lang-btn {
+  padding: 3px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.lang-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lang-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0e0e11;
+}
+
+/* ===========================
+   ПОРОЖНІЙ СТАН СПИСКУ
+   =========================== */
+.empty-msg {
+  list-style: none;
+  text-align: center;
+  padding: 48px 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+/* ===========================
+   ПОЛЕ ВВОДУ + КНОПКА ДОДАТИ
+   =========================== */
+.input-area {
+  display: flex;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 6px 6px 18px;
+  transition: border-color 0.2s;
+}
+
+/* Підсвічуємо рамку коли input у фокусі */
+.input-area:focus-within {
+  border-color: var(--accent);
+}
+
+.task-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  caret-color: var(--accent);
+}
+
+.task-input::placeholder {
+  color: var(--text-muted);
+}
+
+.add-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #0e0e11;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.add-btn:hover  { background: #d4ff3a; }
+.add-btn:active { transform: scale(0.93); }
+
+/* ===========================
+   ФІЛЬТРИ
+   =========================== */
+.filters {
+  display: flex;
+  gap: 6px;
+  padding: 0 2px;
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.04em;
+}
+
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Активний фільтр — заповнений */
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0e0e11;
+  font-weight: 500;
+}
+
+/* ===========================
+   СПИСОК ЗАДАЧ
+   =========================== */
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 80px;
+}
+
+/* Порожній стан */
+.task-list:empty::after {
+  content: 'Задач поки немає ✦';
+  display: block;
+  text-align: center;
+  padding: 48px 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+/* ===========================
+   ОДНА ЗАДАЧА
+   =========================== */
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+
+  /* Анімація появи */
+  animation: slideIn 0.22s ease;
+  transition: border-color 0.15s, opacity 0.15s;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.task-item:hover {
+  border-color: #3a3a4f;
+}
+
+/* --- Кастомний чекбокс --- */
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  background: transparent;
+}
+
+/* Коли задача виконана — чекбокс зелений з галочкою */
+.task-item.done .task-checkbox {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.task-item.done .task-checkbox::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: 2px solid #0e0e11;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+/* --- Текст задачі --- */
+.task-text {
+  flex: 1;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  transition: color 0.15s;
+
+  /* Не дає тексту виходити за межі */
+  word-break: break-word;
+}
+
+/* Перекреслений текст для виконаної задачі */
+.task-item.done .task-text {
+  text-decoration: line-through;
+  color: var(--done-color);
+}
+
+/* --- Кнопка видалення --- */
+.delete-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0;                   /* невидима за замовчуванням */
+  transition: opacity 0.15s, color 0.15s, background 0.15s;
+}
+
+/* Показуємо кнопку при наведенні на задачу */
+.task-item:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  color: #ff5f5f;
+  background: rgba(255,95,95,.1);
+}
+
+/* ===========================
+   ПІДВАЛ
+   =========================== */
+.app-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 4px;
+}
+
+.clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.clear-btn:hover {
+  color: #ff5f5f;
+  border-bottom-color: #ff5f5f;
+}
+
+/* ===========================
+   АНІМАЦІЯ ТРЯСКИ
+   Спрацьовує коли намагаються
+   додати порожню задачу
+   =========================== */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
