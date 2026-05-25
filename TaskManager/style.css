@@ -1,6 +1,6 @@
 /* ===========================
-   CSS ЗМІННІ — кольори та шрифти
-   Змінюй тут — зміниться скрізь
+   CSS VARIABLES — colors and fonts
+   Change here — changes everywhere
    =========================== */
 :root {
   --bg:        #0e0e11;
@@ -17,7 +17,7 @@
 }
 
 /* ===========================
-   СКИДАННЯ СТИЛІВ + БАЗОВІ
+   RESET + BASE STYLES
    =========================== */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -35,7 +35,7 @@ body {
   justify-content: center;
   padding: 60px 16px 40px;
 
-  /* Тонка сітка на фоні для атмосфери */
+  /* Subtle grid on background for atmosphere */
   background-image:
     linear-gradient(rgba(200,241,53,.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(200,241,53,.03) 1px, transparent 1px);
@@ -43,7 +43,7 @@ body {
 }
 
 /* ===========================
-   ГОЛОВНИЙ КОНТЕЙНЕР
+   MAIN CONTAINER
    =========================== */
 .app {
   width: 100%;
@@ -54,7 +54,7 @@ body {
 }
 
 /* ===========================
-   ШАПКА
+   HEADER
    =========================== */
 .app-header {
   display: flex;
@@ -73,7 +73,7 @@ body {
   line-height: 1;
 }
 
-/* Права частина шапки: лічильник + мови */
+/* Right side of header: counter + language buttons */
 .header-right {
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@ body {
 }
 
 /* ===========================
-   ПЕРЕМИКАЧ МОВ
+   LANGUAGE SWITCHER
    =========================== */
 .lang-switcher {
   display: flex;
@@ -121,7 +121,7 @@ body {
 }
 
 /* ===========================
-   ПОРОЖНІЙ СТАН СПИСКУ
+   EMPTY STATE
    =========================== */
 .empty-msg {
   list-style: none;
@@ -133,7 +133,7 @@ body {
 }
 
 /* ===========================
-   ПОЛЕ ВВОДУ + КНОПКА ДОДАТИ
+   INPUT AREA + ADD BUTTON
    =========================== */
 .input-area {
   display: flex;
@@ -145,7 +145,7 @@ body {
   transition: border-color 0.2s;
 }
 
-/* Підсвічуємо рамку коли input у фокусі */
+/* Highlight border when input is focused */
 .input-area:focus-within {
   border-color: var(--accent);
 }
@@ -186,7 +186,7 @@ body {
 .add-btn:active { transform: scale(0.93); }
 
 /* ===========================
-   ФІЛЬТРИ
+   FILTERS
    =========================== */
 .filters {
   display: flex;
@@ -212,7 +212,7 @@ body {
   color: var(--accent);
 }
 
-/* Активний фільтр — заповнений */
+/* Active filter — filled */
 .filter-btn.active {
   background: var(--accent);
   border-color: var(--accent);
@@ -221,7 +221,7 @@ body {
 }
 
 /* ===========================
-   СПИСОК ЗАДАЧ
+   TASK LIST
    =========================== */
 .task-list {
   list-style: none;
@@ -231,9 +231,9 @@ body {
   min-height: 80px;
 }
 
-/* Порожній стан */
+/* Empty state */
 .task-list:empty::after {
-  content: 'Задач поки немає ✦';
+  content: 'No tasks yet ✦';
   display: block;
   text-align: center;
   padding: 48px 0;
@@ -243,7 +243,7 @@ body {
 }
 
 /* ===========================
-   ОДНА ЗАДАЧА
+   SINGLE TASK ITEM
    =========================== */
 .task-item {
   display: flex;
@@ -255,7 +255,7 @@ body {
   border-radius: var(--radius);
   cursor: pointer;
 
-  /* Анімація появи */
+  /* Appear animation */
   animation: slideIn 0.22s ease;
   transition: border-color 0.15s, opacity 0.15s;
 }
@@ -269,7 +269,7 @@ body {
   border-color: #3a3a4f;
 }
 
-/* --- Кастомний чекбокс --- */
+/* --- Custom checkbox --- */
 .task-checkbox {
   width: 20px;
   height: 20px;
@@ -283,7 +283,7 @@ body {
   background: transparent;
 }
 
-/* Коли задача виконана — чекбокс зелений з галочкою */
+/* When task is done — checkbox is green with checkmark */
 .task-item.done .task-checkbox {
   background: var(--accent);
   border-color: var(--accent);
@@ -299,24 +299,24 @@ body {
   transform: rotate(45deg) translate(-1px, -1px);
 }
 
-/* --- Текст задачі --- */
+/* --- Task text --- */
 .task-text {
   flex: 1;
   font-size: 0.92rem;
   line-height: 1.4;
   transition: color 0.15s;
 
-  /* Не дає тексту виходити за межі */
+  /* Prevents text from overflowing */
   word-break: break-word;
 }
 
-/* Перекреслений текст для виконаної задачі */
+/* Strikethrough text for completed task */
 .task-item.done .task-text {
   text-decoration: line-through;
   color: var(--done-color);
 }
 
-/* --- Кнопка видалення --- */
+/* --- Delete button --- */
 .delete-btn {
   width: 28px;
   height: 28px;
@@ -330,11 +330,11 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  opacity: 0;                   /* невидима за замовчуванням */
+  opacity: 0;                   /* hidden by default */
   transition: opacity 0.15s, color 0.15s, background 0.15s;
 }
 
-/* Показуємо кнопку при наведенні на задачу */
+/* Show delete button on task hover */
 .task-item:hover .delete-btn {
   opacity: 1;
 }
@@ -345,7 +345,7 @@ body {
 }
 
 /* ===========================
-   ПІДВАЛ
+   FOOTER
    =========================== */
 .app-footer {
   display: flex;
@@ -372,9 +372,9 @@ body {
 }
 
 /* ===========================
-   АНІМАЦІЯ ТРЯСКИ
-   Спрацьовує коли намагаються
-   додати порожню задачу
+   SHAKE ANIMATION
+   Triggers when trying to
+   add an empty task
    =========================== */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }

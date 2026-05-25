@@ -1,12 +1,12 @@
 // ============================================================
-// TODO APP — app.js (з підтримкою i18n — перемикання мов)
+// TODO APP — app.js (with i18n support — language switching)
 // ============================================================
 
 
 // -------------------------------------------------------
-// 1. СЛОВНИК ПЕРЕКЛАДІВ (i18n)
-//    Об'єкт з ключами-мовами. Кожна мова — об'єкт з рядками.
-//    Щоб додати нову мову — просто додай новий ключ.
+// 1. TRANSLATIONS DICTIONARY (i18n)
+//    Object with language keys. Each language is an object with strings.
+//    To add a new language — just add a new key.
 // -------------------------------------------------------
 
 const TRANSLATIONS = {
@@ -18,7 +18,6 @@ const TRANSLATIONS = {
     clearBtn:         'Очистити виконані',
     deleteTitle:      'Видалити',
     emptyList:        'Задач поки немає ✦',
-    // Форми лічильника: 1 активна / 2 активних / 5 активних
     countOne:         'активна',
     countFew:         'активних',
     countMany:        'активних',
@@ -62,41 +61,40 @@ const TRANSLATIONS = {
 };
 
 
-
 // -------------------------------------------------------
-// 2. СТАН ПРОГРАМИ
+// 2. APPLICATION STATE
 // -------------------------------------------------------
 
 let tasks  = loadFromStorage();
 let filter = 'all';
 
-// Мову також зберігаємо в localStorage — щоб запам'ятовувалась
+// Language is also stored in localStorage — to remember user preference
 let lang = localStorage.getItem('lang') || 'uk';
 
 
 // -------------------------------------------------------
-// 3. ПОСИЛАННЯ НА DOM-ЕЛЕМЕНТИ
+// 3. DOM ELEMENT REFERENCES
 // -------------------------------------------------------
 
-const taskInput   = document.getElementById('taskInput');
-const addBtn      = document.getElementById('addBtn');
-const taskList    = document.getElementById('taskList');
-const filters     = document.getElementById('filters');
-const taskCount   = document.getElementById('taskCount');
-const clearBtn    = document.getElementById('clearBtn');
+const taskInput    = document.getElementById('taskInput');
+const addBtn       = document.getElementById('addBtn');
+const taskList     = document.getElementById('taskList');
+const filters      = document.getElementById('filters');
+const taskCount    = document.getElementById('taskCount');
+const clearBtn     = document.getElementById('clearBtn');
 const langSwitcher = document.getElementById('langSwitcher');
 
 
 // -------------------------------------------------------
-// 4. ІНІЦІАЛІЗАЦІЯ
+// 4. INITIALIZATION
 // -------------------------------------------------------
 
-applyLang(); // спочатку застосовуємо мову
-render();    // потім малюємо список
+applyLang(); // apply language first
+render();    // then render the list
 
 
 // -------------------------------------------------------
-// 5. ОБРОБНИКИ ПОДІЙ
+// 5. EVENT LISTENERS
 // -------------------------------------------------------
 
 addBtn.addEventListener('click', addTask);
@@ -123,44 +121,44 @@ clearBtn.addEventListener('click', function() {
   render();
 });
 
-// Перемикач мов — теж event delegation
+// Language switcher — also uses event delegation
 langSwitcher.addEventListener('click', function(event) {
   const btn = event.target.closest('.lang-btn');
   if (!btn) return;
 
-  lang = btn.dataset.lang; // 'uk' | 'en' | 'de'
+  lang = btn.dataset.lang; // 'uk' | 'en' | 'de' | 'cs'
 
-  // Зберігаємо вибір мови в localStorage
+  // Save language choice to localStorage
   localStorage.setItem('lang', lang);
 
-  // Підсвічуємо активну кнопку мови
+  // Highlight active language button
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  applyLang(); // перекладаємо всі статичні тексти
-  render();    // перемальовуємо динамічні (лічильник, порожній стан)
+  applyLang(); // translate all static texts
+  render();    // re-render dynamic parts (counter, empty state)
 });
 
 
 // -------------------------------------------------------
-// 6. ФУНКЦІЯ ЗАСТОСУВАННЯ МОВИ
-//    Знаходить всі елементи з data-i18n і замінює їх текст
+// 6. APPLY LANGUAGE FUNCTION
+//    Finds all elements with data-i18n and replaces their text
 // -------------------------------------------------------
 
 function applyLang() {
-  const t = TRANSLATIONS[lang]; // отримуємо словник поточної мови
+  const t = TRANSLATIONS[lang]; // get current language dictionary
 
   /*
-    Шукаємо всі елементи, у яких є атрибут data-i18n.
-    Формат значення: "тип:ключ"
-    Приклади:
-      data-i18n="text:filterAll"           → замінить innerText
-      data-i18n="placeholder:inputPlaceholder" → замінить placeholder
+    Find all elements with data-i18n attribute.
+    Value format: "type:key"
+    Examples:
+      data-i18n="text:filterAll"               → replaces innerText
+      data-i18n="placeholder:inputPlaceholder" → replaces placeholder
   */
   document.querySelectorAll('[data-i18n]').forEach(function(el) {
     const [type, key] = el.dataset.i18n.split(':');
-    // type — що саме міняємо: 'text' або 'placeholder'
-    // key  — ключ в словнику TRANSLATIONS
+    // type — what to change: 'text' or 'placeholder'
+    // key  — key in TRANSLATIONS dictionary
 
     if (type === 'text') {
       el.textContent = t[key];
@@ -169,10 +167,10 @@ function applyLang() {
     }
   });
 
-  // Оновлюємо атрибут lang на <html> — важливо для accessibility і SEO
+  // Update lang attribute on <html> — important for accessibility and SEO
   document.documentElement.lang = lang;
 
-  // Синхронізуємо підсвічування кнопки мови (при завантаженні сторінки)
+  // Sync language button highlight (on page load)
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
@@ -180,7 +178,7 @@ function applyLang() {
 
 
 // -------------------------------------------------------
-// 7. ФУНКЦІЯ ДОДАВАННЯ ЗАДАЧІ
+// 7. ADD TASK FUNCTION
 // -------------------------------------------------------
 
 function addTask() {
@@ -197,7 +195,7 @@ function addTask() {
 
 
 // -------------------------------------------------------
-// 8. ПЕРЕМИКАННЯ / ВИДАЛЕННЯ ЗАДАЧІ
+// 8. TOGGLE / DELETE TASK
 // -------------------------------------------------------
 
 function toggleTask(id) {
@@ -215,11 +213,11 @@ function deleteTask(id) {
 
 
 // -------------------------------------------------------
-// 9. ВІДРИСОВКА
+// 9. RENDER FUNCTION
 // -------------------------------------------------------
 
 function render() {
-  const t = TRANSLATIONS[lang]; // перекладений словник
+  const t = TRANSLATIONS[lang]; // translated dictionary
 
   let visibleTasks;
   if (filter === 'all')    visibleTasks = tasks;
@@ -228,7 +226,7 @@ function render() {
 
   taskList.innerHTML = '';
 
-  // Порожній стан — текст береться з перекладів
+  // Empty state — text comes from translations
   if (visibleTasks.length === 0) {
     const li = document.createElement('li');
     li.className = 'empty-msg';
@@ -259,14 +257,14 @@ function render() {
     });
   }
 
-  // Лічильник активних задач
+  // Active tasks counter
   const activeCount = tasks.filter(t => !t.done).length;
   taskCount.textContent = activeCount + ' ' + plural(activeCount, t.countOne, t.countFew, t.countMany);
 }
 
 
 // -------------------------------------------------------
-// 10. ЛОКАЛЬНЕ СХОВИЩЕ
+// 10. LOCAL STORAGE
 // -------------------------------------------------------
 
 function saveToStorage() {
@@ -280,7 +278,7 @@ function loadFromStorage() {
 
 
 // -------------------------------------------------------
-// 11. ДОПОМІЖНІ ФУНКЦІЇ
+// 11. HELPER FUNCTIONS
 // -------------------------------------------------------
 
 function shakeInput() {
@@ -297,9 +295,9 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-// Відмінювання: для EN/DE завжди повертає countOne (вони однакові)
+// Pluralization: for EN/DE always returns countOne (they are the same)
 function plural(n, one, few, many) {
-  if (lang !== 'uk' && lang !== 'cs') return one; // в EN і DE форма одна
+  if (lang !== 'uk' && lang !== 'cs') return one; // EN and DE have one form
   const mod10  = n % 10;
   const mod100 = n % 100;
   if (mod10 === 1 && mod100 !== 11) return one;
